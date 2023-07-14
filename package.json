@@ -1,0 +1,29 @@
+{
+  "name": "travera-mern-stack",
+  "version": "1.0.0",
+  "description": "This is a MERN stack project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \" cd back && npm run dev \" \" cd front && npm run dev \"",
+    "production":"concurrently \" cd front && npm run build && npm run preview \" \" cd back && npm run build \" ",
+    "format": "prettier -w ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/its-kunal/Travera-MERN-stack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/its-kunal/Travera-MERN-stack/issues"
+  },
+  "homepage": "https://github.com/its-kunal/Travera-MERN-stack#readme",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0"
+  }
+}
