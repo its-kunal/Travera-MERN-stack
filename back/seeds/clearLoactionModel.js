@@ -1,4 +1,4 @@
-import { locationModel } from "./locationModel.js";
+import { locationModel } from "../models/locationModel.js";
 import mongoose, { connect, model } from "mongoose"
 
 await connect('mongodb://localhost:27017/test')
