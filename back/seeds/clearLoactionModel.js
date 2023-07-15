@@ -1,12 +1,10 @@
 import { locationModel } from "../models/locationModel.js";
-import mongoose, { connect, model } from "mongoose"
+import mongoose, { connect, model } from "mongoose";
 
-await connect('mongodb://localhost:27017/test')
-    .then((v) => {
-        console.log('Connected to DB!')
-    })
+await connect("mongodb://localhost:27017/test").then((v) => {
+  console.log("Connected to DB!");
+});
 
-await locationModel.deleteMany({})
-.then(()=>{
-    console.log('successfull done')
-})
+await locationModel.deleteMany({}).then(() => {
+  console.log("successfull done");
+});

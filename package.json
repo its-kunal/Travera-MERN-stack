@@ -4,9 +4,8 @@
   "description": "This is a MERN stack project.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \" cd back && npm run dev \" \" cd front && npm run dev \"",
-    "production":"concurrently \" cd front && npm run build && npm run preview \" \" cd back && npm run build \" ",
+    "production": "concurrently \" cd front && npm run build && npm run preview \" \" cd back && npm run build \" ",
     "format": "prettier -w ."
   },
   "repository": {
