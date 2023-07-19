@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Form, Alert } from "react-bootstrap";
 import serverInstance from "../../axios/serverInstance";
 
 export default function SignUpModal({ show, handleClose }) {
