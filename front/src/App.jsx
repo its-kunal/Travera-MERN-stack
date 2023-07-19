@@ -5,19 +5,28 @@ import React, { useState, useRef } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
+// import mapboxgl from "!mapbox-gl";
+import Navbar from "./components/navbar/Navbar";
+
+// mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
+const serverAddress = import.meta.env.VITE_BACKEND_ADDRESS;
 
 export default function App() {
   const [topR, setTopR] = useState();
   const [l, setL] = useState();
   useEffect(() => {
-    axios("http://localhost:8080/loc", {
+    axios.get(`${serverAddress}`).then((v) => {
+      console.log(v.data);
+    });
+
+    axios(`${serverAddress}/loc`, {
       method: "get",
     }).then((v) => {
       // console.log(v.data)
       setL(v.data);
     });
 
-    axios("http://localhost:8080/loc/top", {
+    axios(`${serverAddress}/loc/top`, {
       method: "get",
     }).then((v) => {
       console.log(v.data);
@@ -27,6 +36,7 @@ export default function App() {
 
   return (
     <div>
+      {/* <MyMapComponent /> */}
       <Navbar />
       <Routes>
         <Route
@@ -157,10 +167,37 @@ export default function App() {
   );
 }
 
+function MyMapComponent() {
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [lat, setLat] = useState(-70.9);
+  const [lng, setLng] = useState(42.3);
+  const [zoom, setZoom] = useState(8);
+  useEffect(() => {
+    if (!map.current) return;
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v12",
+      center: [lng, lat],
+      zoom: zoom,
+    });
+  }, []);
+
+  return (
+    <div className="h-[900px]">
+      <div
+        className="h-[900px]"
+        ref={mapContainer}
+        style={{ height: "900px" }}
+      ></div>
+    </div>
+  );
+}
+
 function Component1() {
   const p = useParams();
   useEffect(() => {
-    axios("http://localhost:8080/loc", {
+    axios(`${serverAddress}/loc`, {
       method: "post",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
@@ -212,7 +249,7 @@ function NewLocationForm() {
     console.log(formRef.current.address.value);
     console.log(formRef.current.desc.value);
     console.log(formRef.current.ratings.value);
-    axios("http://localhost:8080/loc/new", {
+    axios(`${serverAddress}/loc/new`, {
       method: "post",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
@@ -273,7 +310,7 @@ function Card({ name, address, description, date, ratings, id }) {
   const formRef = useRef();
   function handleDeleteLocation(id) {
     console.log(`im clicked ${id}`);
-    axios(`http://localhost:8080/loc/${id}`, {
+    axios(`${serverAddress}/loc/${id}`, {
       method: "Delete",
     });
     window.location.reload(false);
@@ -354,7 +391,7 @@ function Card({ name, address, description, date, ratings, id }) {
                 console.log(formRef.current.address.value);
                 console.log(formRef.current.desc.value);
                 console.log(formRef.current.ratings.value);
-                axios(`http://localhost:8080/loc/${id}`, {
+                axios(`${serverAddress}/loc/${id}`, {
                   method: "patch",
                   headers: {
                     "content-type": "application/x-www-form-urlencoded",
@@ -430,23 +467,5 @@ function Card({ name, address, description, date, ratings, id }) {
         </div>
       </div>
     </div>
-  );
-}
-
-function Navbar() {
-  let navigate = useNavigate();
-  return (
-    <nav className="navbar bg-dark">
-      <div className="container">
-        <span
-          className="navbar-brand mb-0 h1 text-info ms-4"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Travera
-        </span>
-      </div>
-    </nav>
   );
 }

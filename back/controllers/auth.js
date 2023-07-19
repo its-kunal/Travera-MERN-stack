@@ -24,8 +24,13 @@ export function generateToken(email, username) {
   return z;
 }
 
-export async function loginController(email, password) {
-  const user = await userModel.findOne({ email });
+export async function loginController(email, password, username) {
+  let user;
+  if (username != null || username != undefined) {
+    user = await userModel.findOne({ username });
+  } else {
+    user = await userModel.findOne({ email });
+  }
   if (!user) {
     throw new Error("User not found");
   }
@@ -41,14 +46,13 @@ export async function signUpController(email, username, name, password) {
   try {
     await userModel.create({ email, username, name, password, otp });
   } catch (err) {
-    throw new Error("Please select different username");
+    throw new Error("Please select different username and email");
   }
   try {
     const token = generateToken(email, username);
     try {
       await sendMail({ email, name }, otp);
     } catch (err) {
-
       throw new Error("Mail not send");
     }
     return token;

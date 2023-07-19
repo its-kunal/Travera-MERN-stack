@@ -15,12 +15,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.json({ name: "User" });
+  res.json({ name: "Welcome to travera!" });
 });
 
 app.post("/", (req, res) => {
-  let a = req.query;
-  res.send(`Hello, ${a.name}`);
+  let { name } = req.query;
+res.send(`Hello, ${name}. Greeting from travera!`);
 });
 
 import {
