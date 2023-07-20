@@ -1,7 +1,8 @@
-import { generateCode, sendMail } from "../utils/mail.js";
+import { generateCode } from "../services/otpGenerate.js";
+import { sendMail } from "../services/mail.js";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
-// import refreshTokenModel from "../models/refreshTokenModel.js";
+
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 

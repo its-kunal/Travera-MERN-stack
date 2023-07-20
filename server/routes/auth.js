@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { generateCode } from "../utils/mail.js";
+import { generateCode } from "../services/otpGenerate.js";
 import {
   createRefreshToken,
   generateToken,
