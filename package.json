@@ -4,8 +4,8 @@
   "description": "This is a MERN stack project.",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \" cd back && npm run dev \" \" cd front && npm run dev \"",
-    "production": "concurrently \" cd front && npm run build && npm run preview \" \" cd back && npm run build \" ",
+    "dev": "concurrently \" cd server && npm run dev \" \" cd client && npm run dev \"",
+    "production": "concurrently \" cd client && npm run build && npm run preview \" \" cd server && npm run build \" ",
     "format": "prettier -w ."
   },
   "repository": {
