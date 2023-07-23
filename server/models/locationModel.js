@@ -25,12 +25,13 @@ const locationSchema = new Schema({
     type: String,
     maxLength: 100,
   },
-  dateCreated: { type: Date, required: true },
+  dateCreated: { type: Date, required: true, default: Date.now },
   location: {
     type: pointSchema,
     required: true,
     index: "2dsphere",
   },
+  image: String,
   createdBy: {
     type: String,
     required: true,

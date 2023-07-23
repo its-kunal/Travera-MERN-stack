@@ -1,12 +1,9 @@
 import { generateCode } from "../services/otpGenerate.js";
 import { sendMail } from "../services/mail.js";
 import userModel from "../models/userModel.js";
-import jwt from "jsonwebtoken";
 
-import dotenv from "dotenv";
 import bcrypt from "bcrypt";
-
-dotenv.config();
+import { generateJWT } from "../services/jwt.js";
 
 // function to check if user exists : boolean
 export async function isUserExist(email) {
@@ -19,9 +16,7 @@ export async function isUserExist(email) {
 
 export function generateToken(email, username) {
   const payload = { email, username };
-  const z = jwt.sign(payload, process.env.JWT_SECRET_TOKEN, {
-    expiresIn: "1h",
-  });
+  const z = generateJWT(payload, "1h");
   return z;
 }
 
@@ -112,18 +107,8 @@ export async function loginUserEmail(email, pass) {
   return false;
 }
 
-export function verifyUserJwt() {
-  let isVerified = false;
-  jwt.verify(token, process.env.JWT_SECRET_TOKEN, (err, decoded) => {
-    if (!err) {
-      isVerified = true;
-    }
-  });
-  return isVerified;
-}
-
 export async function createRefreshToken(email) {
-  const token = jwt.sign({ email }, process.env.JWT_REFRESH_TOKEN);
+  const token = generateJWT({ email }, "1h");
   await refreshTokenModel.create({ email, token });
   return token;
 }
