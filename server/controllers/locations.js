@@ -11,15 +11,24 @@ async function aggregateRating(locationId) {
   return a;
 }
 
-function createLocation(filepath, locationData) {
+async function createLocation(filepath, locationData) {
   // resize image
-  resizeImage(
-    filepath,
-    path.relative(
-      __dirname,
-      path.join(path.dirname(filepath), "resizedImage.webp")
-    )
-  );
+  try {
+    await resizeImage(filepath, "temp/" + path.basename(filepath) + ".webp");
+  } catch (error) {
+    throw new Error("Cannot Resize Image");
+  }
   // convert image to base64
+  let base64Str;
+  try {
+    base64Str = fs.readFileSync("temp/" + path.basename(filepath) + ".webp");
+  } catch (error) {
+    throw new Error("Cannot Convert Image to Base64");
+  }
   // add data in database
+  try {
+    await locationModel.create({ ...locationData, image: base64Str });
+  } catch (err) {
+    throw new Error("Cannot Create Location in Database");
+  }
 }
