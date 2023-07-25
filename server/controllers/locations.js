@@ -3,7 +3,9 @@ import locationReviewModel from "../models/locationReviewModel";
 import path from "path";
 import { resizeImage } from "../services/imageResizer";
 
-async function aggregateRating(locationId) {
+const maxDistance = 100;
+
+export async function aggregateRating(locationId) {
   const a = await locationReviewModel.aggregate([
     { $match: { locationId: locationId } },
     { $group: { _id: locationId, avgRating: { $avg: "$rating" } } },
@@ -11,7 +13,12 @@ async function aggregateRating(locationId) {
   return a;
 }
 
-async function createLocation(filepath, locationData) {
+export async function countRatings(locationId) {
+  const a = await locationReviewModel.countDocuments({ locationId });
+  return a;
+}
+
+export async function createLocation(filepath, locationData) {
   // resize image
   try {
     await resizeImage(filepath, "temp/" + path.basename(filepath) + ".webp");
@@ -31,4 +38,45 @@ async function createLocation(filepath, locationData) {
   } catch (err) {
     throw new Error("Cannot Create Location in Database");
   }
+}
+
+export async function queryLocation(
+  latitude,
+  longitude,
+  radius = maxDistance,
+  latest = true
+) {
+  return await locationModel
+    .find({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [longitude, latitude],
+          },
+          $maxDistance: radius,
+        },
+      },
+    })
+    .sort({ dateCreated: latest ? -1 : 1 });
+}
+
+export async function deleteLocation(locationId) {
+  await locationReviewModel.deleteMany({ locationId: locationId });
+  await locationModel.deleteOne({ _id: locationId });
+}
+
+export async function updateLocation(
+  locationId,
+  name = null,
+  address = null,
+  description = null,
+  location = null
+) {
+  let obj = {};
+  if (name != null) obj.name = name;
+  if (address != null) obj.address = address;
+  if (description != null) obj.description = description;
+  if (location != null) obj.location = location;
+  await locationModel.updateOne({ _id: locationId }, { ...obj });
 }
