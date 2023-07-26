@@ -80,3 +80,5 @@ export async function updateLocation(
   if (location != null) obj.location = location;
   await locationModel.updateOne({ _id: locationId }, { ...obj });
 }
+
+
