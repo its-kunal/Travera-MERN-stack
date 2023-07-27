@@ -17,9 +17,8 @@ PATCH - /loc/:id
 Updates data
 */
 
-
 const router = express.Router();
-router.use(verifyMiddleware)
+router.use(verifyMiddleware);
 // get locations
 /*
 Params
@@ -45,5 +44,15 @@ router.put("/review/:reviewId", (req, res) => {});
 
 // delete a review for a location
 router.delete("/review/:reviewId", (req, res) => {});
+
+
+// New Outline
+
+// create location
+// update location
+// get aggregate rating
+// get count of number of ratings
+// get locations using latitude and longitude
+
 
 export default router;

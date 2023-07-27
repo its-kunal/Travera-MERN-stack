@@ -17,7 +17,7 @@ export default function AuthProvider({ children }) {
     };
   }, []);
 
-  let value = {   
+  let value = {
     token,
     username,
     name,
@@ -33,7 +33,7 @@ export default function AuthProvider({ children }) {
 
 export function setUser(
   { tokenToSet, usernameToSet, nameToSet, emailToSet },
-  { setToken, setUsername, setName, setEmail }
+  { setToken, setUsername, setName, setEmail },
 ) {
   setToken(tokenToSet);
   setUsername(usernameToSet);

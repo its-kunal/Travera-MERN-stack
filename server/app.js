@@ -20,9 +20,8 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   let { name } = req.query;
-res.send(`Hello, ${name}. Greeting from travera!`);
+  res.send(`Hello, ${name}. Greeting from travera!`);
 });
-
 
 // authentication routes
 app.use("/auth", authRouter);

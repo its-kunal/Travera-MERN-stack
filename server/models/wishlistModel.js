@@ -5,6 +5,6 @@ const wishlistSchema = new Schema({
   locations: [{ type: String }],
 });
 
-const wishlistModel = model('Wishlist', wishlistSchema)
+const wishlistModel = model("Wishlist", wishlistSchema);
 
 export default wishlistModel;

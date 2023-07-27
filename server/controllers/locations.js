@@ -3,7 +3,7 @@ import locationReviewModel from "../models/locationReviewModel";
 import path from "path";
 import { resizeImage } from "../services/imageResizer";
 
-const maxDistance = 100;
+const maxDistance = 1000;
 
 export async function aggregateRating(locationId) {
   const a = await locationReviewModel.aggregate([
@@ -44,7 +44,7 @@ export async function queryLocation(
   latitude,
   longitude,
   radius = maxDistance,
-  latest = true
+  latest = true,
 ) {
   return await locationModel
     .find({
@@ -71,7 +71,7 @@ export async function updateLocation(
   name = null,
   address = null,
   description = null,
-  location = null
+  location = null,
 ) {
   let obj = {};
   if (name != null) obj.name = name;
@@ -80,5 +80,3 @@ export async function updateLocation(
   if (location != null) obj.location = location;
   await locationModel.updateOne({ _id: locationId }, { ...obj });
 }
-
-

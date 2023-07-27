@@ -62,7 +62,7 @@ export async function signUpVerifyController(email, otp, user) {
   if (otp === user.otp) {
     await userModel.updateOne(
       { email },
-      { isVerified: true, $unset: { otp: 1 } }
+      { isVerified: true, $unset: { otp: 1 } },
     );
   } else {
     throw new Error("Invalid OTP, Try Again");

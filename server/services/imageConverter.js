@@ -7,5 +7,3 @@ export function imageToBase64(imagePath) {
 export function base64ToImage(base64Str, filepath) {
   fs.writeFileSync(filepath, base64Str, "base64");
 }
-
-

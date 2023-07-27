@@ -2,7 +2,7 @@ import express from "express";
 import { verifyMiddleware } from "./auth.js";
 
 const router = express.Router();
-router.use(verifyMiddleware)
+router.use(verifyMiddleware);
 
 // get
 router.get("/", (req, res) => {});
