@@ -66,6 +66,8 @@ export async function deleteLocation(locationId) {
   await locationModel.deleteOne({ _id: locationId });
 }
 
+
+// TODO: change this function, add functionality to change image
 export async function updateLocation(
   locationId,
   name = null,

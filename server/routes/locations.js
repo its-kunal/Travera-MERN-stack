@@ -45,14 +45,24 @@ router.put("/review/:reviewId", (req, res) => {});
 // delete a review for a location
 router.delete("/review/:reviewId", (req, res) => {});
 
-
 // New Outline
 
 // create location
+router.post("/", (req, res) => {
+  // save file in server temp folder --> use multer
+  // extract location data from request body
+  // call create location controller
+  // return response status with message
+});
+
 // update location
+router.put("/:id", (req, res) => {
+  // reterive id from request params
+  const { id } = req.params;
+});
+
 // get aggregate rating
 // get count of number of ratings
 // get locations using latitude and longitude
-
 
 export default router;
