@@ -65,8 +65,8 @@ export async function verifyMiddleware(req, res, next) {
       if (err) {
         return res.status(403).send("Invalid Token");
       }
+      req.user = decoded;
     },
   );
-  req.user = decoded;
   next();
 }
