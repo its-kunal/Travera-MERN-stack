@@ -59,6 +59,7 @@ router.post("/", (req, res) => {
 router.put("/:id", (req, res) => {
   // reterive id from request params
   const { id } = req.params;
+  
 });
 
 // get aggregate rating

@@ -2,7 +2,7 @@ import locationModel from "../models/locationModel";
 import locationReviewModel from "../models/locationReviewModel";
 import path from "path";
 import { resizeImage } from "../services/imageResizer";
-
+import fs from "fs";
 const maxDistance = 1000;
 
 export async function aggregateRating(locationId) {
@@ -44,7 +44,7 @@ export async function queryLocation(
   latitude,
   longitude,
   radius = maxDistance,
-  latest = true,
+  latest = true
 ) {
   return await locationModel
     .find({
@@ -66,7 +66,6 @@ export async function deleteLocation(locationId) {
   await locationModel.deleteOne({ _id: locationId });
 }
 
-
 // TODO: change this function, add functionality to change image
 export async function updateLocation(
   locationId,
@@ -74,11 +73,17 @@ export async function updateLocation(
   address = null,
   description = null,
   location = null,
+  image = null // image as a filepath
 ) {
   let obj = {};
   if (name != null) obj.name = name;
   if (address != null) obj.address = address;
   if (description != null) obj.description = description;
   if (location != null) obj.location = location;
+  if (image != null) {
+    await resizeImage(image, image + ".webp");
+    image = fs.readFileSync(image + ".webp");
+    obj.image = image;
+  }
   await locationModel.updateOne({ _id: locationId }, { ...obj });
 }
