@@ -41,6 +41,11 @@ npm run production
 <!-- Also if you want to seed some data to your database -->
 <!-- ADD Seed  feature in your project -->
 
+## Vision
+- Integrate vector database like weaviate for image search.
+
+
 ## Contribution
 
 Please feel free to raise issues, and contribute to this project. Also, create different pull requests for each new feature.
+
