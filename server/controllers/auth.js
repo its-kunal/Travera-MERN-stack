@@ -107,8 +107,9 @@ export async function loginUserEmail(email, pass) {
   return false;
 }
 
-export async function createRefreshToken(email) {
-  const token = generateJWT({ email }, "1h");
-  await refreshTokenModel.create({ email, token });
-  return token;
-}
+// God knows what to do with this. 😵
+// export async function createRefreshToken(email) {
+//   const token = generateJWT({ email }, "1h");
+//   await refreshTokenModel.create({ email, token });
+//   return token;
+// }

@@ -2,10 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { generateCode } from "../services/otpGenerate.js";
 import {
-  createRefreshToken,
-  generateToken,
   loginController,
-  loginUserEmail,
   signUpController,
   signUpVerifyController,
 } from "../controllers/auth.js";
@@ -66,7 +63,7 @@ export async function verifyMiddleware(req, res, next) {
         return res.status(403).send("Invalid Token");
       }
       req.user = decoded;
-    },
+    }
   );
   next();
 }

@@ -1,7 +1,7 @@
 import wishlistModel from "../models/wishlistModel";
 
 // get wishlist by user id
-async function getWishlist(username) {
+export async function getWishlist(username) {
   return await wishlistModel.find({ username });
 }
 

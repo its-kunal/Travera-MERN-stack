@@ -1,6 +1,10 @@
 import express from "express";
 import { verifyMiddleware } from "./auth.js";
-
+import multer from "multer";
+import path from "path";
+const upload = multer({
+  dest: path.relative(__dirname, path.join(__dirname, "temp")),
+});
 // Functionalities
 /* 
 GET - /loc/top
@@ -26,29 +30,29 @@ Params
     Nearby location
     
 */
-router.get("/loc", (req, res) => {});
+// router.get("/loc", (req, res) => {});
 
-// create a location
-/*
-params
-location model fields
-with user details
-*/
-router.post("/loc", (req, res) => {});
+// // create a location
+// /*
+// params
+// location model fields
+// with user details
+// */
+// router.post("/loc", (req, res) => {});
 
-// create a review for a location
-router.post("/:locID/review", (req, res) => {});
+// // create a review for a location
+// router.post("/:locID/review", (req, res) => {});
 
-// edit a review for a location
-router.put("/review/:reviewId", (req, res) => {});
+// // edit a review for a location
+// router.put("/review/:reviewId", (req, res) => {});
 
-// delete a review for a location
-router.delete("/review/:reviewId", (req, res) => {});
+// // delete a review for a location
+// router.delete("/review/:reviewId", (req, res) => {});
 
 // New Outline
 
 // create location
-router.post("/", (req, res) => {
+router.post("/", upload.single("image"), (req, res) => {
   // save file in server temp folder --> use multer
   // extract location data from request body
   // call create location controller
@@ -59,7 +63,6 @@ router.post("/", (req, res) => {
 router.put("/:id", (req, res) => {
   // reterive id from request params
   const { id } = req.params;
-  
 });
 
 // get aggregate rating

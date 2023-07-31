@@ -1,6 +1,6 @@
 import locationModel from "../models/locationModel";
 import locationReviewModel from "../models/locationReviewModel";
-import path from "path";
+import path, { dirname } from "path";
 import { resizeImage } from "../services/imageResizer";
 import fs from "fs";
 const maxDistance = 1000;
@@ -66,7 +66,6 @@ export async function deleteLocation(locationId) {
   await locationModel.deleteOne({ _id: locationId });
 }
 
-// TODO: change this function, add functionality to change image
 export async function updateLocation(
   locationId,
   name = null,
