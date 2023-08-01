@@ -1,7 +1,9 @@
 import express from "express";
 import { verifyMiddleware } from "./auth.js";
 import multer from "multer";
+import fs from "fs";
 import path from "path";
+import { createLocation } from "../controllers/locations.js";
 const upload = multer({
   dest: path.relative(__dirname, path.join(__dirname, "temp")),
 });
@@ -52,11 +54,30 @@ Params
 // New Outline
 
 // create location
-router.post("/", upload.single("image"), (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
   // save file in server temp folder --> use multer
+  fs.renameSync(
+    path.relative(__dirname, path.join(__dirname, "temp", req.file.filename)),
+    req.file.originalname
+  );
   // extract location data from request body
+  const { name, address, description, dateCreated, location, createdBy } =
+    req.body;
   // call create location controller
+  try {
+    await createLocation(
+      path.relative(
+        __dirname,
+        path.join(__dirname, "temp"),
+        req.file.originalname
+      ),
+      { name, address, description, dateCreated, location, createdBy }
+    );
+  } catch (err) {
+    throw new Error("Unable to create location");
+  }
   // return response status with message
+  res.status(200).send("Location created");
 });
 
 // update location
