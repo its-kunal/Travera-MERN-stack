@@ -58,7 +58,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   // save file in server temp folder --> use multer
   fs.renameSync(
     path.relative(__dirname, path.join(__dirname, "temp", req.file.filename)),
-    req.file.originalname
+    req.file.originalname,
   );
   // extract location data from request body
   const { name, address, description, dateCreated, location, createdBy } =
@@ -69,9 +69,9 @@ router.post("/", upload.single("image"), async (req, res) => {
       path.relative(
         __dirname,
         path.join(__dirname, "temp"),
-        req.file.originalname
+        req.file.originalname,
       ),
-      { name, address, description, dateCreated, location, createdBy }
+      { name, address, description, dateCreated, location, createdBy },
     );
   } catch (err) {
     throw new Error("Unable to create location");

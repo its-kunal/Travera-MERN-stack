@@ -10,7 +10,7 @@ export async function getWishlist(username) {
 export async function deleteLocationInWishlist(username, locationId) {
   await wishlistModel.findOneAndUpdate(
     { username },
-    { $pull: { locations: locationId } }
+    { $pull: { locations: locationId } },
   );
 }
 
@@ -25,6 +25,6 @@ async function addLocationInWishlist(username, locationId) {
       $addToSet: {
         locations: locationId,
       },
-    }
+    },
   );
 }

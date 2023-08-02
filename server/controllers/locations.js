@@ -44,7 +44,7 @@ export async function queryLocation(
   latitude,
   longitude,
   radius = maxDistance,
-  latest = true
+  latest = true,
 ) {
   return await locationModel
     .find({
@@ -72,7 +72,7 @@ export async function updateLocation(
   address = null,
   description = null,
   location = null,
-  image = null // image as a filepath
+  image = null, // image as a filepath
 ) {
   let obj = {};
   if (name != null) obj.name = name;
