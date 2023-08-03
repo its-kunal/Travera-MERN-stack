@@ -68,18 +68,18 @@ export async function deleteLocation(locationId) {
 
 export async function updateLocation(
   locationId,
-  name = null,
-  address = null,
-  description = null,
-  location = null,
-  image = null, // image as a filepath
+  name = undefined,
+  address = undefined,
+  description = undefined,
+  location = undefined,
+  image = undefined, // image as a filepath
 ) {
   let obj = {};
-  if (name != null) obj.name = name;
-  if (address != null) obj.address = address;
-  if (description != null) obj.description = description;
-  if (location != null) obj.location = location;
-  if (image != null) {
+  if (name != undefined) obj.name = name;
+  if (address != undefined) obj.address = address;
+  if (description != undefined) obj.description = description;
+  if (location != undefined) obj.location = location;
+  if (image != undefined) {
     await resizeImage(image, image + ".webp");
     image = fs.readFileSync(image + ".webp");
     obj.image = image;

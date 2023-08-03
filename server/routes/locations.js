@@ -3,7 +3,7 @@ import { verifyMiddleware } from "./auth.js";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
-import { createLocation } from "../controllers/locations.js";
+import { createLocation, updateLocation } from "../controllers/locations.js";
 const upload = multer({
   dest: path.relative(__dirname, path.join(__dirname, "temp")),
 });
@@ -58,7 +58,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   // save file in server temp folder --> use multer
   fs.renameSync(
     path.relative(__dirname, path.join(__dirname, "temp", req.file.filename)),
-    req.file.originalname,
+    req.file.originalname
   );
   // extract location data from request body
   const { name, address, description, dateCreated, location, createdBy } =
@@ -69,9 +69,9 @@ router.post("/", upload.single("image"), async (req, res) => {
       path.relative(
         __dirname,
         path.join(__dirname, "temp"),
-        req.file.originalname,
+        req.file.originalname
       ),
-      { name, address, description, dateCreated, location, createdBy },
+      { name, address, description, dateCreated, location, createdBy }
     );
   } catch (err) {
     throw new Error("Unable to create location");
@@ -81,9 +81,35 @@ router.post("/", upload.single("image"), async (req, res) => {
 });
 
 // update location
-router.put("/:id", (req, res) => {
-  // reterive id from request params
+router.put("/:id", upload.single("image"), async (req, res) => {
   const { id } = req.params;
+  // save file in server temp folder --> use multer
+  fs.renameSync(
+    path.relative(__dirname, path.join(__dirname, "temp", req.file.filename)),
+    req.file.originalname
+  );
+  // extract location data from request body
+  const { name, address, description, dateCreated, location, createdBy } =
+    req.body;
+  // call create location controller
+  try {
+    await updateLocation(
+      id,
+      name,
+      address,
+      description,
+      location,
+      path.relative(
+        __dirname,
+        path.join(__dirname, "temp"),
+        req.file.originalname
+      )
+    );
+  } catch (err) {
+    throw new Error("Unable to update location");
+  }
+  // return response status with message
+  res.status(200).send("Location updated");
 });
 
 // get aggregate rating
