@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import locationModel from "./locationModel";
+import locationModel from "./locationModel.js";
 
 export const reviewSchema = new Schema({
   comment: { type: String },

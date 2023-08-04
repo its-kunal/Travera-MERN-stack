@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import { createLocation, updateLocation } from "../controllers/locations.js";
 const upload = multer({
-  dest: path.relative(__dirname, path.join(__dirname, "temp")),
+  dest: "/temp",
 });
 // Functionalities
 /* 
@@ -57,7 +57,8 @@ Params
 router.post("/", upload.single("image"), async (req, res) => {
   // save file in server temp folder --> use multer
   fs.renameSync(
-    path.relative(__dirname, path.join(__dirname, "temp", req.file.filename)),
+    // path.relative(__dirname, path.join(__dirname, "temp", req.file.filename)),
+    `temp/${req.file.filename}`,
     req.file.originalname
   );
   // extract location data from request body
@@ -65,14 +66,14 @@ router.post("/", upload.single("image"), async (req, res) => {
     req.body;
   // call create location controller
   try {
-    await createLocation(
-      path.relative(
-        __dirname,
-        path.join(__dirname, "temp"),
-        req.file.originalname
-      ),
-      { name, address, description, dateCreated, location, createdBy }
-    );
+    await createLocation(`temp/${req.file.filename}`, {
+      name,
+      address,
+      description,
+      dateCreated,
+      location,
+      createdBy,
+    });
   } catch (err) {
     throw new Error("Unable to create location");
   }
@@ -84,10 +85,7 @@ router.post("/", upload.single("image"), async (req, res) => {
 router.put("/:id", upload.single("image"), async (req, res) => {
   const { id } = req.params;
   // save file in server temp folder --> use multer
-  fs.renameSync(
-    path.relative(__dirname, path.join(__dirname, "temp", req.file.filename)),
-    req.file.originalname
-  );
+  fs.renameSync(`temp/${req.file.filename}`, req.file.originalname);
   // extract location data from request body
   const { name, address, description, dateCreated, location, createdBy } =
     req.body;

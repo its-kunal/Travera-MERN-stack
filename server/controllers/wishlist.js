@@ -1,4 +1,4 @@
-import wishlistModel from "../models/wishlistModel";
+import wishlistModel from "../models/wishlistModel.js";
 
 // get wishlist by user id
 export async function getWishlist(username) {

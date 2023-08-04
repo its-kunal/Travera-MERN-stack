@@ -1,7 +1,7 @@
-import locationModel from "../models/locationModel";
-import locationReviewModel from "../models/locationReviewModel";
+import locationModel from "../models/locationModel.js";
+import locationReviewModel from "../models/locationReviewModel.js";
 import path, { dirname } from "path";
-import { resizeImage } from "../services/imageResizer";
+import { resizeImage } from "../services/imageResizer.js";
 import fs from "fs";
 const maxDistance = 1000;
 

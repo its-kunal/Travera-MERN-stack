@@ -1,5 +1,7 @@
-import { sign, verify } from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken";
 import dotenv from "dotenv";
+
+const { sign, verify } = jsonwebtoken
 
 dotenv.config();
 
